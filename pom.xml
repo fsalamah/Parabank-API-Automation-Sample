@@ -29,9 +29,7 @@
 				<version>3.2.5</version>
 				<configuration>
 					<testFailureIgnore>false</testFailureIgnore>
-					<argLine>-Dfile.encoding=${project.build.sourceEncoding}
-						-javaagent:"${settings.localRepository}\org\aspectj\aspectjweaver\${aspectj.version}\aspectjweaver-${aspectj.version}.jar
-						"</argLine>
+
 					<forkCount>5</forkCount>
 					<suiteXmlFiles>
 						<file>./testng.xml</file>

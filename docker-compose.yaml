@@ -1,0 +1,35 @@
+
+
+version: '3.8'
+services:
+  allure:
+    image: "frankescobar/allure-docker-service"
+    environment:
+      limits:
+        memory:256
+      CHECK_RESULTS_EVERY_SECONDS: 1
+      KEEP_HISTORY: 1
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./testresults/allure-results:/app/allure-results
+      - ./testresults/default-reports:/app/default-reports
+
+  allure-ui:
+    image: "frankescobar/allure-docker-service-ui"
+    environment:
+      limits:
+        memory:256
+      ALLURE_DOCKER_PUBLIC_API_URL: "http://localhost:5050"
+      ALLURE_DOCKER_PUBLIC_API_URL_PREFIX: ""
+    ports:
+      - "5252:5252"
+
+  test:
+    environment:
+      limits:
+        memory:256
+    image: restassured:parabank
+    volumes:
+      - ./testresults/:/framework/target/
+
