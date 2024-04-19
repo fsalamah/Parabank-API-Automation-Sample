@@ -7,22 +7,41 @@ This project provides a foundation for automated API testing using RestAssured a
 - Test Lifecycle Hooks logging
 - Logging (Log4J)
 - Retry failed test cases
-  
-## Prerequisites
+- Run as a Docker Service with [Allure Docker Service](https://github.com/fescobar/allure-docker-service)   
+
+## Getting Started - Docker Service (Option 1)
+1- Clone or Download the Project
+
+2- Build the docker image
+```
+docker build -t restassured:parabank .
+```  
+3- Compose Docker Service
+```
+docker compose up
+```
+4- Generate the report through Allure Docker Service UI 
+
+http://localhost:5252/
+## Getting Started - Bare Metal (Option 2)
+### Prerequisites
 -Java 11
 
 -Maven 4 
 
 -Allure Report ([Installation guide]([url](https://allurereport.org/docs/gettingstarted-installation)))
 
-## Getting Started
-- Clone or Download the Project
-Build and Run Tests:
+### Steps
+
+1- Clone or Download the Project
+
+Run Tests:
 Navigate to the root directory of the project and run
 ```
 mvn clean test
 ```     
-## Generating and Serving Allure Report
+
+2- Generating and Serving Allure Report
 Navigate to the /target dir in the command line and run:
 ```
 allure generate
@@ -62,4 +81,9 @@ properties
           |  | - pom.xml: Maven project model            
           |-resources: has the test.properties file and test.xlsx (test data) file
 ```            
+
+
+## Screenshots
+**Allure Report Service**
+![App Screenshot](https://github.com/fsalamah/restAssuredParabank/blob/main/reportservice.png?raw=true)
 
