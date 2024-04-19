@@ -13,26 +13,31 @@ import io.restassured.response.Response;
 import utils.FrameworkConstants;
 
 public class LoginEndpoint extends BaseEndpoints{
-	
-	public static final String ENDPOINT="/bank/login/{username}/{password}"; 
+
+	public static final String ENDPOINT="/bank/login/{username}/{password}";
 	public static Response login(String username, String password) {
 		return login(username,password, getSessionCookie());
 	}
-	
-	
+
+
 	public static Response login(String username, String password, String sessionId) {
 		return RestAssured.given()
-								.spec(getApiSpecs())
-								.cookie(FrameworkConstants.JSESSIONID, sessionId)
-								.pathParam("username", username)
-								.pathParam("password", password).when()
-							.get(ENDPOINT);
+                        .spec(getApiSpecs())
+                        .cookie(FrameworkConstants.JSESSIONID, sessionId)
+                        .pathParam("username", username)
+                        .pathParam("password", password)
+                      .when()
+                        .get(ENDPOINT)
+                      .then()
+                        .spec(GetApiResponseSpec())
+                        .extract()
+                        .response();
 	}
-	
+
 	private static String getSessionCookie()
 	{
 		return RestAssured.given().baseUri(BASE_WEB_URL).get( "/index.htm").then().extract().cookie("JSESSIONID");
-		
+
 	}
-	
+
 }

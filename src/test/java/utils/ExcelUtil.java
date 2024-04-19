@@ -28,17 +28,17 @@ import endpoints.RegistrationEndpoints;
 
 public class ExcelUtil {
 
-    	  
+
     	  private static final String FILE = "./src/test/resources/test.xlsx";
     	  private static final DataFormatter dataFormatter = new DataFormatter();
-  
 
-   
+
+
 
     	  public static Map<String,Object> mapTestRow(Object[] testRow)
     	  {
     		  return (Map<String,Object>)testRow[0];
-    		  
+
     	  }
     	  public static Object[][] readSheet(String sheetName, String fileLocation) throws IOException, InvalidFormatException {
     	    Workbook workbook = WorkbookFactory.create(new File(fileLocation));
@@ -58,7 +58,7 @@ public class ExcelUtil {
     	    }
     	    return asTwoDimensionalArray(results);
     	  }
-    	  
+
     	  private static Object[][] asTwoDimensionalArray(List<Map<String, String>> interimResults) {
     	    Object[][] results = new Object[interimResults.size()][1];
     	    int index = 0;
@@ -82,7 +82,7 @@ public class ExcelUtil {
     	    List<String> data = new ArrayList<>();
     	    Iterable<Cell> columns = row::cellIterator;
     	    for (Cell column : columns) {
-    	    	
+
     	      data.add(dataFormatter.formatCellValue(column));
     	    }
     	    return data;

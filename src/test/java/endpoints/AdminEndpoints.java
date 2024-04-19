@@ -13,13 +13,13 @@ public class AdminEndpoints extends BaseEndpoints{
 	public static void initializeAccountBalanceSettings()
 	{
 		logger.info("INITIALIZING PARABANK SETTINGS");
-		
+
 		Map<String,String> cookies = RestAssured.given()
 				.spec(getWebSpecs())
 				.get("/admin.htm")
 			.then().extract().cookies();
-		
-		
+
+
 		RestAssured.given()
 			.spec(getWebSpecs())
 			.formParam("accessMode","restjson")
@@ -33,29 +33,30 @@ public class AdminEndpoints extends BaseEndpoints{
 			.cookies(cookies)
 			.post("/admin.htm")
 		.then()
-			.statusCode(200);
-		
+      .spec(GetApiResponseSpec());
+
 	}
-	
+
 	public static void cleanDatabase()
 	{
 		logger.info("CLEANING UP THE SYSTEM DB");
-		
+
 		//get a session token
 		var sessionId = RestAssured.given()
-										.baseUri("https://parabank.parasoft.com")
-										.get()
-									.then()
-										.extract()
-										.cookie(FrameworkConstants.JSESSIONID);
+                                  .baseUri("https://parabank.parasoft.com")
+                                  .get()
+								              	.then()
+                                  .spec(GetApiResponseSpec())
+                                  .extract()
+                                  .cookie(FrameworkConstants.JSESSIONID);
 
-		//Clean up the database 		
+		//Clean up the database
 		RestAssured.given()
 						.spec(getWebSpecs())
 						.formParam("action", "CLEAN")
 						.cookie("JSESSIONID",sessionId)
 						.post("/db.htm")
 					.then()
-						.statusCode(200);
+            .spec(GetApiResponseSpec());
 	}
 }

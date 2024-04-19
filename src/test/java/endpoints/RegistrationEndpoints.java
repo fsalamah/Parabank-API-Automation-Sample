@@ -16,12 +16,12 @@ import utils.FrameworkConstants;
 
 public class RegistrationEndpoints extends BaseEndpoints{
 	//
-	
+
 	public static String registerUser(String username, String password )
 	{
-		
+
 		var cookie = getSessionCookie();
-	
+
 		//Execute the user registration request
 		RestAssured.given()
 						.baseUri(BASE_WEB_URL)
@@ -34,16 +34,18 @@ public class RegistrationEndpoints extends BaseEndpoints{
 								+ "&customer.username="+username+"&customer.password="+password+"&repeatedPassword="+password)
 						.post("/register.htm")
 					.then()
-						.assertThat().body(Matchers.stringContainsInOrder("Your account was created successfully. You are now logged in.")) ;
+            .spec(GetApiResponseSpec())
+						.assertThat()
+            .body(Matchers.stringContainsInOrder("Your account was created successfully. You are now logged in."));
 		return cookie;
 		}
-		
-		
-		
+
+
+
 		public static String getSessionCookie()
 		{
-			return RestAssured.given().get(BASE_WEB_URL+ "/register.htm").then().extract().cookie(FrameworkConstants.JSESSIONID);
-			
+			return RestAssured.given().get(BASE_WEB_URL+ "/register.htm").then().spec(GetApiResponseSpec()).extract().cookie(FrameworkConstants.JSESSIONID);
+
 		}
-	
+
 }

@@ -9,16 +9,16 @@ import io.restassured.response.Response;
 
 public class TransferEndpoints extends BaseEndpoints{
 	private static final String ENDPOINT = "/bank/transfer?fromAccountId={accountId}&toAccountId={toAccountId}&amount={amount}";
-	
+
 	/**
 	 * Transfer money between the customer accounts
 	 * @param sourceAccount
 	 * @param receivingAccountDetails
-	 * @return 
+	 * @return
 	 */
 	@Step("Transfere money between accounts")
 	public static Response transfereBetweenAccounts(int sourceAccountId, int receivingAccountid, Double amount, String token) {
-		
+
 		return 				RestAssured.given()
 									.spec(getApiSpecs())
 									.cookie("JSESSIONID",token)
@@ -27,18 +27,23 @@ public class TransferEndpoints extends BaseEndpoints{
 									.pathParam("toAccountId", receivingAccountid)
 									.pathParam("amount", amount)
 							.when()
-									.post(ENDPOINT);
+									.post(ENDPOINT)
+              .then()
+                  .spec(GetApiResponseSpec())
+                  .extract()
+                  .response();
+
 	}
 
 	/**
 	 * Transfer money between the customer accounts
 	 * @param sourceAccount
 	 * @param receivingAccountDetails
-	 * @return 
+	 * @return
 	 */
 	@Step("Transfere money between accounts")
 	public static Response transfereBetweenAccountsWithoutToken(int sourceAccountId, int receivingAccountid, Double amount) {
-		
+
 		return 				RestAssured.given()
 									.spec(getApiSpecs())
 									.header("Accept-encoding", "gzip, deflate, br")
@@ -46,6 +51,10 @@ public class TransferEndpoints extends BaseEndpoints{
 									.pathParam("toAccountId", receivingAccountid)
 									.pathParam("amount", amount)
 							.when()
-									.post(ENDPOINT);
+									.post(ENDPOINT)
+              .then()
+                  .spec(GetApiResponseSpec())
+                  .extract()
+                  .response();
 	}
 }
