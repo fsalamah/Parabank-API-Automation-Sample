@@ -1,6 +1,6 @@
 package endpoints;
 
-import commons.BaseEndpoints;
+import base.BaseEndpoints;
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;

@@ -5,12 +5,12 @@ import java.util.Map.Entry;
 
 import org.testng.annotations.Test;
 
-import commons.BaseEndpoints;
-import commons.FrameworkConstants;
+import base.BaseEndpoints;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
+import utils.FrameworkConstants;
 
 public class LoginEndpoint extends BaseEndpoints{
 	

@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
-import commons.FrameworkConstants;
 import endpoints.AccountsEndpoint;
 import endpoints.LoginEndpoint;
 import endpoints.RegistrationEndpoints;
@@ -48,7 +47,7 @@ public class TestDataHelper {
 					userSessions.put(username, sessionId);
 					
 					//Get the default customer default account
-					CustomerAccount cusomerDefaultAccount = AccountsEndpoint.getCustomerAccounts(customer.getId(), sessionId).as(CustomerAccount[].class)[0];
+					CustomerAccount cusomerDefaultAccount = AccountsEndpoint.getAccounts(customer.getId(), sessionId).as(CustomerAccount[].class)[0];
 					customerAccounts.put(username+".default",cusomerDefaultAccount.getId());		
 				
 					
@@ -62,7 +61,7 @@ public class TestDataHelper {
 							if( customerAccountDetails.get("username").toString().equals(userDetails.get("username").toString()))
 							{								
 									CustomerAccount newAccountDetails = 
-									AccountsEndpoint.createCustomerAccount(	Integer.parseInt( customerAccountDetails.get("account-type").toString()), 
+									AccountsEndpoint.createAccount(	Integer.parseInt( customerAccountDetails.get("account-type").toString()), 
 																			customer.getId(), 
 																			cusomerDefaultAccount.getId(),sessionId)
 																			.getBody().as(CustomerAccount.class);

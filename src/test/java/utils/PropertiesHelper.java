@@ -6,8 +6,7 @@ import java.util.Properties;
 
 import com.mongodb.diagnostics.logging.Logger;
 
-import commons.FrameworkBase;
-import commons.FrameworkConstants;
+import base.FrameworkBase;
 
 public class PropertiesHelper extends FrameworkBase{
 

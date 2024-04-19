@@ -2,15 +2,15 @@ package endpoints;
 
 import java.util.List;
 
-import commons.BaseEndpoints;
-import commons.FrameworkBase;
-import commons.FrameworkConstants;
+import base.BaseEndpoints;
+import base.FrameworkBase;
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.CustomerAccount;
+import utils.FrameworkConstants;
 
 public class AccountsEndpoint extends BaseEndpoints {
 	
@@ -25,7 +25,7 @@ public class AccountsEndpoint extends BaseEndpoints {
 	 * @return 
 	 */
 	@Step("Get Account by id {accountId}")
-	public static Response getCustomerAccountById(int accountId, String sessionId) {
+	public static Response getAccountById(int accountId, String sessionId) {
 
 		return			 RestAssured.given()
 								.spec(getApiSpecs())
@@ -36,8 +36,14 @@ public class AccountsEndpoint extends BaseEndpoints {
 								.get(ENDPOINT_ACCOUNT_BY_ID);
 	}
 	
-	
-
+	public static CustomerAccount getAccountObjById(int accountId, String sessionId) 
+	{
+		return getAccountById(accountId, sessionId).as(CustomerAccount.class);
+	}
+	public static double getBalanceById(int accountId, String sessionId) 
+	{
+		return getAccountById(accountId, sessionId).as(CustomerAccount.class).getBalance();
+	}
 	
 	
 	
@@ -46,7 +52,7 @@ public class AccountsEndpoint extends BaseEndpoints {
 	 *  
 	 */
 	@Step("Get customer accounts")
-	public static Response getCustomerAccounts(int customerId,String sessionId) {
+	public static Response getAccounts(int customerId,String sessionId) {
 	
 		return 				RestAssured.given()
 									.cookie(FrameworkConstants.JSESSIONID, sessionId)
@@ -71,7 +77,7 @@ public class AccountsEndpoint extends BaseEndpoints {
 	 * @return a CustomerAccount object with the new account
 	 */
 	@Step("Create Customer Account account type {accountType}")
-	public static Response createCustomerAccount(int accountType, int customerId, int sourceAccountId, String sessionId) {
+	public static Response createAccount(int accountType, int customerId, int sourceAccountId, String sessionId) {
 		
 		return 				RestAssured.given()
 								.spec(getApiSpecs())

@@ -7,21 +7,15 @@ import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import commons.BaseTest;
-import commons.FrameworkConstants;
+
+import base.BaseTest;
 import endpoints.AccountsEndpoint;
 import endpoints.AdminEndpoints;
-import endpoints.LoginEndpoint;
-import endpoints.RegistrationEndpoints;
 import endpoints.TransferEndpoints;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureLifecycle;
-import models.Customer;
-import models.CustomerAccount;
 import utils.DataStore;
-import utils.ExcelUtil;
-import utils.PropertiesHelper;
+import utils.FrameworkConstants;
 import utils.RetryListener;
 import utils.TestDataHelper;
 import utils.TestDataProvider;
@@ -51,7 +45,7 @@ public class TestTransfer extends BaseTest {
 	
 	
 	@Test( testName = "Verify Transfer Positive Cases", 
-			dataProvider = "test-data-provider", 
+			dataProvider 	= "test-data-provider", 
 			dataProviderClass = TestDataProvider.class, 
 			priority = 0, groups = {"regression", "smoke"},
 			retryAnalyzer = RetryListener.class)
@@ -66,19 +60,20 @@ public class TestTransfer extends BaseTest {
 		var sessionId = userSessions.get(testData.get("username"));		
 				
 		//get the source account id 
-		int sendAccountId = customerAccounts.get(testData.get("username")+"." + testData.get("from-account"));
+		int sendAccountId = customerAccounts.get(getAccountKeyFromTestData(testData));
 		//get the source account id 
-		int receiveAccountId = customerAccounts.get(testData.get("username")+"." + testData.get("to-account"));
+		int receiveAccountId = customerAccounts.get(getAccountKeyFromTestData(testData));
 		
 		
-		//get the send account to check the funds before/after transfer
-		double sendAccountBalanceBefore = AccountsEndpoint.getCustomerAccountById(sendAccountId, sessionId).getBody().as(CustomerAccount.class).getBalance();		
-		//get the source account to check the funds before/after transfer
-		double receiveAccountBalanceBefore = AccountsEndpoint.getCustomerAccountById(receiveAccountId, sessionId).getBody().as(CustomerAccount.class).getBalance();
+		//get the send account balance to check the funds before/after transfer
+		double sendAccountBalanceBefore 	= AccountsEndpoint.getBalanceById(sendAccountId, sessionId);		
+		//get the source account balance to check the funds before/after transfer
+		double receiveAccountBalanceBefore 	= AccountsEndpoint.getBalanceById(receiveAccountId, sessionId);
+		
 				
 		
-		double transferAmount = Double.parseDouble(testData.get("amount"));
-		double expectedTransferAmount =  Double.parseDouble(testData.get("expected-transfered-amount"));
+		double transferAmount 			= Double.parseDouble(testData.get("amount"));
+		double expectedTransferAmount 	= Double.parseDouble(testData.get("expected-transfered-amount"));
 		
 		
 		// perform the transfer and assert response code, perform response regex assertion, 
@@ -92,8 +87,8 @@ public class TestTransfer extends BaseTest {
 
 		
 		// Get the updated accounts after the transfer
-		double receiveAccountBalanceAfter = AccountsEndpoint.getCustomerAccountById(receiveAccountId, sessionId).getBody().as(CustomerAccount.class).getBalance();
-		double SendAccountBalanceAfter = AccountsEndpoint.getCustomerAccountById(sendAccountId, sessionId).getBody().as(CustomerAccount.class).getBalance();
+		double receiveAccountBalanceAfter = AccountsEndpoint.getBalanceById(receiveAccountId, sessionId);
+		double SendAccountBalanceAfter = AccountsEndpoint.getBalanceById(sendAccountId, sessionId);
 
 		
 		// Verify the amount was deducted from the original account
@@ -110,6 +105,19 @@ public class TestTransfer extends BaseTest {
 		
 		
 
+	}
+
+
+
+
+
+	/**
+	 * generates an account key for the account in the format username.account-alias
+	 * @param testData
+	 * @return
+	 */
+	private static String getAccountKeyFromTestData(Map<String, String> testData) {
+		return testData.get("username")+"." + testData.get("from-account");
 	}
 	
 	

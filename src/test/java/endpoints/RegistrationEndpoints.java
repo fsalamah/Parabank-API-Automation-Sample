@@ -5,14 +5,14 @@ import org.apache.xmlbeans.impl.repackage.Repackage;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
-import commons.BaseEndpoints;
-import commons.FrameworkConstants;
+import base.BaseEndpoints;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import utils.FrameworkConstants;
 
 public class RegistrationEndpoints extends BaseEndpoints{
 	//

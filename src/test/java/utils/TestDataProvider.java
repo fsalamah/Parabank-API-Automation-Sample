@@ -7,7 +7,6 @@ import org.testng.annotations.DataProvider;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
-import commons.FrameworkConstants;
 import io.restassured.RestAssured;
 
 public class TestDataProvider {

@@ -2,8 +2,7 @@ package utils;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
-import commons.FrameworkBase;
-import commons.FrameworkConstants;
+import base.FrameworkBase;
 
 public class RetryListener  extends FrameworkBase implements IRetryAnalyzer  {
 	private int count = 0;

@@ -2,11 +2,11 @@ package endpoints;
 
 import java.util.Map;
 
-import commons.BaseEndpoints;
-import commons.FrameworkConstants;
+import base.BaseEndpoints;
 import io.restassured.RestAssured;
 import io.restassured.http.Cookies;
 import io.restassured.specification.RequestSpecification;
+import utils.FrameworkConstants;
 
 public class AdminEndpoints extends BaseEndpoints{
 
