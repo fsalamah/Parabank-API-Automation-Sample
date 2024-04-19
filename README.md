@@ -24,11 +24,17 @@ allure serve
 
 ## Test Properties
 The project utilizes a properties file (src/test/resources/test.properties) 
+
 properties
+    
     BASE_API_URL=https://parabank.parasoft.com/parabank/services
+
     BASE_WEB_URL=https://parabank.parasoft.com/parabank
+    
     TEST_FILE_PATH =./src/test/resources/test.xlsx
+    
     REQUEST_ALLOWED_TIME_MS=5000
+    
     MAXIMUM_RETRIES=1
 
 ## Project Structure
