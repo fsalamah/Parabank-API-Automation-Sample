@@ -1,6 +1,13 @@
 # Maven RestAssured API Automation Testing Framework
 This project provides a foundation for automated API testing using RestAssured and Maven, along with Allure reporting for comprehensive test results visualization.
-
+## Features
+- Parametrized testing
+- Allure Reporting
+- Parrallel exection capablity
+- Test Lifecycle Hooks logging
+- Logging (Log4J)
+- Retry failed test cases
+  
 ## Prerequisites
 -Java 11
 
