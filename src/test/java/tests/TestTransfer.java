@@ -58,10 +58,10 @@ public class TestTransfer extends BaseTest {
 
 		//get the sending account id
 		int sendAccountId =  Allure.step("get the sending account id " ,
-                                    ()->customerAccounts.get( testData.get("to-account")));
+                                    ()->customerAccounts.get( testData.get("from-account")));
 		//get the receiving account id
 		int receiveAccountId = Allure.step("get the receiving account id",
-                                      ()->customerAccounts.get(testData.get("from-account")));
+                                      ()->customerAccounts.get(testData.get("to-account")));
 
 
 		//get the send account balance to check the funds before/after transfer
