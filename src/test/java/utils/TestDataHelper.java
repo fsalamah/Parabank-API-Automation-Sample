@@ -2,13 +2,11 @@ package utils;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-
 import endpoints.AccountsEndpoint;
 import endpoints.LoginEndpoint;
 import endpoints.RegistrationEndpoints;
+import io.qameta.allure.Allure;
 import models.Customer;
 import models.CustomerAccount;
 
@@ -39,17 +37,18 @@ public class TestDataHelper {
 					var password = userDetails.get("password").toString();
 
 					//hit the registration end-point to register the user
-				 	var sessionId = RegistrationEndpoints.registerUser(username,password);
+				 	var sessionId =Allure.step("Register user " +username, ()->  RegistrationEndpoints.registerUser(username,password));
 
 					//Get the user object through the login
-					var customer = LoginEndpoint.login(username,password,sessionId).getBody().as(Customer.class);
+					var customer =  Allure.step("Login to get the user object " +username, ()->LoginEndpoint.login(username,password,sessionId).getBody().as(Customer.class));
 
 
 
 					userSessions.put(username, sessionId);
 
 					//Get the default customer default account
-					CustomerAccount cusomerDefaultAccount = AccountsEndpoint.getAccounts(customer.getId(), sessionId).as(CustomerAccount[].class)[0];
+					CustomerAccount cusomerDefaultAccount =  Allure.step("Get the user accounts to identify the default account id " +username,
+                                                              ()-> AccountsEndpoint.getAccounts(customer.getId(), sessionId).as(CustomerAccount[].class)[0]);
 					customerAccounts.put(username+".default",cusomerDefaultAccount.getId());
 
 
@@ -62,11 +61,10 @@ public class TestDataHelper {
 							// Look for the accounts from the test data that belongs to the current customer and create them if any
 							if( customerAccountDetails.get("username").toString().equals(userDetails.get("username").toString()))
 							{
-									CustomerAccount newAccountDetails =
-									AccountsEndpoint.createAccount(	Integer.parseInt( customerAccountDetails.get("account-type").toString()),
-																			customer.getId(),
-																			cusomerDefaultAccount.getId(),sessionId)
-																			.getBody().as(CustomerAccount.class);
+									CustomerAccount newAccountDetails = Allure.step("Create the user account user:" +username+ " account: "  +  customerAccountDetails.get("account-alias")  ,
+                                                                  ()->AccountsEndpoint.createAccount(	Integer.parseInt( customerAccountDetails.get("account-type").toString()),
+                                                                                                      customer.getId(),cusomerDefaultAccount.getId(),sessionId)
+                                                                                                      .getBody().as(CustomerAccount.class));
 
 										customerAccounts.put(customerAccountDetails.get("account-alias").toString() ,newAccountDetails.getId());
 							}
