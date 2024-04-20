@@ -7,7 +7,7 @@ This project provides a foundation for automated API testing using RestAssured a
 - Test Lifecycle Hooks logging
 - Logging (Log4J)
 - Retry failed test cases
-- Run as a Docker Service with [Allure Docker Service](https://github.com/fescobar/allure-docker-service)   
+- Run as a Docker Service to execute the test and view the reports with [Allure Docker Service](https://github.com/fescobar/allure-docker-service)   
 
 ## Getting Started - Docker Service (Option 1)
 1- Clone or Download the Project
