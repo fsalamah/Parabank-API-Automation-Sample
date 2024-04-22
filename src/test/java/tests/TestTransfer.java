@@ -81,7 +81,7 @@ public class TestTransfer extends BaseTest {
     Allure.step("Execute the transfer from account " + sendAccountId + " to " + receiveAccountId + " with the amount " + transferAmount,
                   ()->TransferEndpoints.transfereBetweenAccounts(sendAccountId, receiveAccountId, transferAmount, sessionId)
                   .then()
-                  .body(Matchers.matchesRegex("Successfully transferred \\$.* from account #" + sendAccountId + " to account #" + receiveAccountId)) // assert regex response body
+                  .body(Matchers.equalTo("Successfully transferred $"+expectedTransferAmount+" from account #" + sendAccountId + " to account #" + receiveAccountId)) // assert response body correctness
                   .assertThat().statusLine(FrameworkConstants.HTTP_STATUS_OK) // assert status line
                   .assertThat().statusCode(200)// assert status code
                   .assertThat().time(Matchers.lessThan( REQUEST_ALLOWED_TIME_MS))); //assert time taken
