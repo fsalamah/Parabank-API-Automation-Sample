@@ -2,9 +2,7 @@ package endpoints;
 
 import base.BaseEndpoints;
 import io.qameta.allure.Step;
-import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 public class TransferEndpoints extends BaseEndpoints{

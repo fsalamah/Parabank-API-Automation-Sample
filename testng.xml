@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Parabank API Suite" parallel="methods">
+<suite name="Parabank API Suite" parallel="classes">
 	<test name="Account Transfer Test" thread-count="1">
 		<classes>
 			<class name="tests.TestTransfer" />
+			<class name="tests.SuiteHooks" />
 		</classes>
 	</test> <!--
 	Test -->

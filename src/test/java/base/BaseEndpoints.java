@@ -1,10 +1,5 @@
 package base;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.databind.deser.Deserializers.Base;
-
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -15,10 +10,10 @@ import io.restassured.specification.ResponseSpecification;
 import utils.FrameworkConstants;
 import utils.PropertiesHelper;
 
-public class BaseEndpoints {
-	protected static final Logger logger = LoggerFactory.getLogger(BaseEndpoints.class);
-	public static final  String BASE_WEB_URL = PropertiesHelper.get( FrameworkConstants.BASE_WEB_URL);
-	public static final String BASE_API_URL = PropertiesHelper.get( FrameworkConstants.BASE_API_URL);
+public class BaseEndpoints extends FrameworkBase {
+	
+	public static final  String BASE_WEB_URL = PropertiesHelper.get( FrameworkConstants.PROP_BASE_WEB_URL);
+	public static final String BASE_API_URL = PropertiesHelper.get( FrameworkConstants.PROP_BASE_API_URL);
 
 	public static  RequestSpecification getApiSpecs()
 	{
@@ -38,8 +33,9 @@ public class BaseEndpoints {
 		sb.setBaseUri(BASE_WEB_URL);
 		sb.addFilter(new AllureRestAssured());
 		sb.addFilter(new RequestLoggingFilter());
+		sb.addHeader("origin", "https://parabank.parasoft.com");
 		sb.addHeader("Cache-Control","no-cache");
-		sb.setAccept(ContentType.JSON);
+		
 		return sb.build();
 	}
 

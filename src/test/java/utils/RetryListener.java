@@ -6,7 +6,7 @@ import base.FrameworkBase;
 
 public class RetryListener  extends FrameworkBase implements IRetryAnalyzer  {
 	private int count = 0;
-	private int retries = Integer.parseInt( PropertiesHelper.get(FrameworkConstants.MAXIMUM_RETRIES));
+	private int retries = Integer.parseInt( PropertiesHelper.get(FrameworkConstants.PROP_MAXIMUM_RETRIES));
 
 	@Override
 	public boolean retry(ITestResult result) {

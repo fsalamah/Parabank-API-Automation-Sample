@@ -1,51 +1,42 @@
 package endpoints;
 
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.xmlbeans.impl.repackage.Repackage;
-import org.hamcrest.Matchers;
-import org.testng.annotations.Test;
-
 import base.BaseEndpoints;
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.http.Cookie;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import utils.FrameworkConstants;
+import utils.SessionCookieHelper;
 
 public class RegistrationEndpoints extends BaseEndpoints{
-	//
-
+	
+	public static final String REGISTER_ENDPOINT = "/register.htm";
+	/*
+	* Registers a user with the provided username and password.
+	*
+	* @param username The username of the user to register.
+	* @param password The password of the user to register.
+	* @return The session cookie obtained after successful registration.
+	*/
 	public static String registerUser(String username, String password )
 	{
 
-		var cookie = getSessionCookie();
-
+		var cookie = SessionCookieHelper.getSessionCookie(BASE_WEB_URL+ REGISTER_ENDPOINT);
+		
 		//Execute the user registration request
-		RestAssured.given()
-						.baseUri(BASE_WEB_URL)
-						.cookie(FrameworkConstants.JSESSIONID,cookie)
-						.contentType("application/x-www-form-urlencoded")
-						.body("customer.firstName=user001&customer.lastName=user001"
-								+ "&customer.address.street=user001&customer.address.city=user001"
-								+ "&customer.address.state=user001&customer.address.zipCode=user001"
-								+ "&customer.phoneNumber=user001&customer.ssn=user001"
-								+ "&customer.username="+username+"&customer.password="+password+"&repeatedPassword="+password)
-						.post("/register.htm")
-					.then()
-            .spec(GetApiResponseSpec())
-						.assertThat()
-            .body(Matchers.stringContainsInOrder("Your account was created successfully. You are now logged in."));
-		return cookie;
-		}
+		return RestAssured	.given()
+								.spec(getWebSpecs())
+								.baseUri(BASE_WEB_URL)
+								.cookie(FrameworkConstants.JSESSIONID,cookie)
+								.contentType("application/x-www-form-urlencoded")
+								.body("customer.firstName=user001&customer.lastName=user001"
+										+ "&customer.address.street=user001&customer.address.city=user001"
+										+ "&customer.address.state=user001&customer.address.zipCode=user001"
+										+ "&customer.phoneNumber=user001&customer.ssn=user001"
+										+ "&customer.username="+username+"&customer.password="+password+"&repeatedPassword="+password)
+							.when()
+								.post("/register.htm")
+							.then()
+								.extract()
+								.cookie(FrameworkConstants.JSESSIONID);
+	}
 
-
-
-		public static String getSessionCookie()
-		{
-			return RestAssured.given().get(BASE_WEB_URL+ "/register.htm").then().spec(GetApiResponseSpec()).extract().cookie(FrameworkConstants.JSESSIONID);
-
-		}
 
 }

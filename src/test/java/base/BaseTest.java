@@ -2,17 +2,10 @@ package base;
 
 
 import java.io.StringWriter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-
-import io.restassured.RestAssured;
-import io.restassured.filter.log.LogDetail;
 import utils.DataStore;
 import utils.PropertiesHelper;
 
@@ -27,7 +20,6 @@ public class BaseTest extends FrameworkBase {
 	public void beforeMethod(ITestResult result)
 	{
 		logger.info( "------- TEST METHOD: "+ result.getMethod().getMethodName() +" SRATED ---------");
-		        
 	}
 	
 	@AfterMethod

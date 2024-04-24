@@ -14,14 +14,14 @@ public class PropertiesHelper extends FrameworkBase{
 		Properties prop = new Properties();
 		InputStream input;
 		try {
-			input = new FileInputStream(FrameworkConstants.PROPS_PATH);
+			input = new FileInputStream(FrameworkConstants.PROPS_FILE_PATH);
 
 			// load a properties file
 			
 			prop.load(input);
 		} catch (Exception e) {
 			
-			logger.error("FAILED TO READ PROPERTIES FROM FILE " +FrameworkConstants.PROPS_PATH ,e);
+			logger.error("FAILED TO READ PROPERTIES FROM FILE " +FrameworkConstants.PROPS_FILE_PATH ,e);
 			
 		}
 

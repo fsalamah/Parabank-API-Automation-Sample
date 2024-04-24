@@ -16,6 +16,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.AllureLifecycle;
 import utils.DataStore;
 import utils.FrameworkConstants;
+import utils.SessionCookieHelper;
 import utils.TestDataHelper;
 import utils.TestDataProvider;
 
@@ -25,19 +26,7 @@ public class TestTransfer extends BaseTest {
 	private static HashMap<String,String> userSessions = DataStore.getInstance().getUserSessions();
 	private static HashMap<String,Integer> customerAccounts = DataStore.getInstance().getCustomerAccounts();
 
-	@BeforeClass
-	public void Setup() throws IOException {
-
-        // Clean up the database
-        Allure.step("Clean up the system db",()->AdminEndpoints.cleanDatabase());
-
-        // initialize account balances since the test relies on these
-        Allure.step("initialize account balances since the test relies on these",()-> AdminEndpoints.initializeAccountBalanceSettings());
-
-        //Setup the data for the tests (users and accounts)
-        Allure.step("Setup the data for the tests (users and accounts)" ,()->TestDataHelper.setupInitialTestData());
-
-	}
+	
 
 
 	@Test(  testName = "Verify Transfer Positive Cases",
@@ -48,6 +37,7 @@ public class TestTransfer extends BaseTest {
 
         AllureLifecycle lifecycle = Allure.getLifecycle();
         lifecycle.updateTestCase(testResult -> testResult.setName(testData.get("description")));
+        
 
         //get the user token
         var sessionId        = Allure.step("get the user token " + testData.get("username"),
