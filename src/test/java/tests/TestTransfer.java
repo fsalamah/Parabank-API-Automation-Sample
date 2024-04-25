@@ -1,23 +1,18 @@
 package tests;
 
-import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.hamcrest.Matchers;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import base.BaseTest;
 import endpoints.AccountsEndpoint;
-import endpoints.AdminEndpoints;
 import endpoints.TransferEndpoints;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureLifecycle;
 import utils.DataStore;
 import utils.FrameworkConstants;
-import utils.SessionCookieHelper;
-import utils.TestDataHelper;
 import utils.TestDataProvider;
 
 
