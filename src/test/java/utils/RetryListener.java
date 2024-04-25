@@ -4,7 +4,7 @@ import org.testng.ITestResult;
 
 import base.FrameworkBase;
 
-public class RetryListener  extends FrameworkBase implements IRetryAnalyzer  {
+public class RetryListener  extends FrameworkBase implements IRetryAnalyzer   {
 	private int count = 0;
 	private int retries = Integer.parseInt( PropertiesHelper.get(FrameworkConstants.PROP_MAXIMUM_RETRIES));
 
