@@ -3,7 +3,6 @@ package models;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Builder;
 
 @Getter @Setter
 public class Customer {
